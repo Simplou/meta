@@ -12,7 +12,7 @@ import (
 	"github.com/Simplou/goxios"
 )
 
-func GenerateMediaID(whatsapp *client, senderID, filePath, mimeType string) (string, error) {
+func GenerateMediaID(whatsapp *client, filePath, mimeType string) (string, error) {
 	var (
 		media            Media
 		ext              = filepath.Ext(filePath)
@@ -57,7 +57,7 @@ func GenerateMediaID(whatsapp *client, senderID, filePath, mimeType string) (str
 		return "", err
 	}
 
-	url := whatsapp.Endpoint(senderID + "/media")
+	url := whatsapp.Endpoint(whatsapp.senderID + "/media")
 	res, err := whatsapp.Post(url, &goxios.RequestOpts{
 		Headers: whatsapp.Headers(writer.FormDataContentType()),
 		Body:    body,

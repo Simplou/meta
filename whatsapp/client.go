@@ -9,11 +9,13 @@ import (
 )
 
 type client struct {
+	senderID string
 	meta.Client
 }
 
-func New(ctx context.Context, apiVersion, accessToken string) *client {
+func New(ctx context.Context, apiVersion, accessToken, senderID string) *client {
 	return &client{
+		senderID: senderID,
 		Client: meta.Client{
 			HttpClient:  goxios.New(ctx),
 			ApiVersion:  apiVersion,

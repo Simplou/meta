@@ -24,16 +24,15 @@ func main() {
 		}
 	}
 	env := getEnv()
-	whats := whatsapp.New(ctx, "v19.0", env.accessToken)
+	whats := whatsapp.New(ctx, "v19.0", env.accessToken, env.senderID)
 	filePath := "./cmd/build.png"
 	ext := filepath.Ext(filePath)
-	imageID, err := whatsapp.GenerateMediaID(whats, env.senderID, filePath, mime.TypeByExtension(ext))
-	if err != nil{
+	imageID, err := whatsapp.GenerateMediaID(whats, filePath, mime.TypeByExtension(ext))
+	if err != nil {
 		panic(err)
 	}
 	err = whatsapp.SendMessage(
 		whats,
-		env.senderID,
 		whatsapp.WhatsappBody[whatsapp.Image]{
 			JSON: whatsapp.Image{
 				Header: whatsapp.Header{
