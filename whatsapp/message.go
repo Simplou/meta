@@ -56,13 +56,13 @@ type WhatsappBody[MessageType Text | Audio | Document | Image | Video | Sticker]
 	JSON MessageType
 }
 
-func SendMessage[MessageType Text | Audio | Document | Image | Video | Sticker](whatsapp *client, senderID string, body WhatsappBody[MessageType]) error {
+func SendMessage[MessageType Text | Audio | Document | Image | Video | Sticker](whatsapp *client, body WhatsappBody[MessageType]) error {
 	b, err := json.Marshal(body.JSON)
 	if err != nil {
 		return err
 	}
 
-	url := whatsapp.Endpoint(senderID + "/messages")
+	url := whatsapp.Endpoint(whatsapp.senderID + "/messages")
 	res, err := whatsapp.Post(url, &goxios.RequestOpts{
 		Body:    whatsapp.Reader(b),
 		Headers: whatsapp.Headers("application/json"),
